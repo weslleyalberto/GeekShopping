@@ -1,17 +1,16 @@
 using Duende.IdentityServer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using Project1.Configuration;
-using Project1.Data;
+using Project1.Initializer;
 using Project1.Model.Context;
-using Project1.Models;
 using Serilog;
 
 namespace Project1
 {
     internal static class HostingExtensions
     {
+       
         public static WebApplication ConfigureServices(this WebApplicationBuilder builder)
         {
             builder.Services.AddRazorPages();
@@ -21,6 +20,7 @@ namespace Project1
                 options.UseMySql(connection, new MySqlServerVersion(new Version(8, 0, 31)));
             });
             builder.Services.AddIdentity<Project1.Model.ApplicationUser, IdentityRole>().AddEntityFrameworkStores<MySqlContext>().AddDefaultTokenProviders();
+           
            
            /* builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));*/
@@ -45,8 +45,8 @@ namespace Project1
                 .AddInMemoryClients(IdentityConfiguration.Cliets)
                 //TODO - verificar porque nao funciona essa classe
                 .AddAspNetIdentity<Project1.Model.ApplicationUser>();
-            
 
+            builder.Services.AddScoped<IDbInitialize, DbInitializer>();
             builder.Services.AddAuthentication()
                 .AddGoogle(options =>
                 {
@@ -61,9 +61,13 @@ namespace Project1
 
             return builder.Build();
         }
-
+       
+        
+           
         public static WebApplication ConfigurePipeline(this WebApplication app)
         {
+            var scope  = app.Services.CreateScope();
+            var dbInitialize = scope.ServiceProvider.GetService<IDbInitialize>();
             app.UseSerilogRequestLogging();
 
             if (app.Environment.IsDevelopment())
@@ -75,7 +79,8 @@ namespace Project1
             app.UseRouting();
             app.UseIdentityServer();
             app.UseAuthorization();
-
+            
+            dbInitialize.Initialize();
             app.MapRazorPages()
                 .RequireAuthorization();
 

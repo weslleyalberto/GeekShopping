@@ -81,3 +81,4 @@ C:\Users\wesll\OneDrive\Área de Trabalho\Curso_Udemy\GeekShopping\Project1\obj\
 C:\Users\wesll\OneDrive\Área de Trabalho\Curso_Udemy\GeekShopping\Project1\obj\Debug\net6.0\Project1.pdb
 C:\Users\wesll\OneDrive\Área de Trabalho\Curso_Udemy\GeekShopping\Project1\obj\Debug\net6.0\Project1.genruntimeconfig.cache
 C:\Users\wesll\OneDrive\Área de Trabalho\Curso_Udemy\GeekShopping\Project1\obj\Debug\net6.0\ref\Project1.dll
+C:\Users\wesll\OneDrive\Área de Trabalho\Curso_Udemy\GeekShopping\Project1\bin\Debug\net6.0\keys\is-signing-key-7ABDE5177E7F466F2129903F8012734B.json

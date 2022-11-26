@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Project1;
+using Project1.Initializer;
 using Project1.Model;
 using Project1.Model.Context;
 using Serilog;
@@ -20,7 +21,7 @@ try
         .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level}] {SourceContext}{NewLine}{Message:lj}{NewLine}{Exception}{NewLine}")
         .Enrich.FromLogContext()
         .ReadFrom.Configuration(ctx.Configuration));
-
+    
     var app = builder
         .ConfigureServices()
         .ConfigurePipeline();
